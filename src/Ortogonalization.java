@@ -3,9 +3,11 @@ import java.io.FileReader;
 import java.util.Scanner;
 import java.lang.Math;
 public class Ortogonalization {
+    //here we calculate alpha, dividing scalar(x(i),b) and scalar(A*x(i), x(i))
     static double alpha(double[][] matr,double[] x, double[] b){ //calculates alpha
         return scalar(x,b)/scalar(mult(matr,x),x);
     }
+    //this function returns array multiplied by current number a
     static  double[] mult_a(double a, double[] mas){
         for(int i=0; i<mas.length; i++){
             mas[i]*=a;
@@ -82,11 +84,13 @@ public class Ortogonalization {
         double[] temp;
         //here we find x(2), x(3), ... x(n)
         for(int m=1; m<rows; m++){
-            temp=sum(AFM(x,m),AFM(y,m)); //here we get array (vector) of sum two vectors x(m) and y(m)
-                                         //x(m) as default equals to (0,0,...0)
+            temp=AFM(y,m); //here we get array (vector) y(m)
+            //according to formula we see that x(m)=y(m)+a(1)x(1)+...;
+            //so here we just init our x(m) as y(m)
             for(int cx=0; cx<rows; cx++){
                 x[cx][m]=temp[cx];
             }
+            //and then in this block we just add a(i)x(i)
             for(int i=0;i<m;i++){
                 lam[i]=-scalar(AFM(x,i),mult(myArray,AFM(y,m)))/scalar(AFM(x,i),mult(myArray,AFM(x,i)));
                 temp=mult_a(lam[i],AFM(x,i));
@@ -95,14 +99,16 @@ public class Ortogonalization {
                 }
 
             }
+            //after this two cycles we get x(m)
         }
-        //Final result (FinalX)
+        //--Final result (FinalX)
+        //here we see linear combination - sum of x(i) multiplied by alpha, where alpha calculates in function alpha()
         for(int f=0; f<rows;f++){
             FinalX=sum(FinalX,mult_a(alpha(myArray,AFM(x,f),AFM(myArray,rows)),AFM(x,f)));
 
         }
         //------------------------------------------------------------------------------------------------//
-        //Matrix Output Block
+        //--Matrix Output Block
         /*for(int i=0; i<rows; i++){
             System.out.println();
             for(int j=0; j<columns; j++){
@@ -110,9 +116,11 @@ public class Ortogonalization {
                 System.out.print(" ");
             }
         }*/
-        //input final result
-        for(int gh=0;gh<FinalX.length; gh++){
-            System.out.print(Math.round(1000.0 * FinalX[gh]) / 1000.0);
+
+        //--input final result
+        //Shows our results
+        for(Double gh:FinalX){ //for each Double gh in array Finalx shows gh
+            System.out.print(Math.round(1000.0 * gh) / 1000.0); //here i just rounded results
             System.out.print(" ");
 
         }
