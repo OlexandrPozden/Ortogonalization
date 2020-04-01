@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.lang.Math;
 public class Ortogonalization {
     //here we calculate alpha, dividing scalar(x(i),b) and scalar(A*x(i), x(i))
-    static double alpha(double[][] matr,double[] x, double[] b){ //calculates alpha
+    static double alpha(double[][] matr,double[] x, double[] b){ 
         return scalar(x,b)/scalar(mult(matr,x),x);
     }
     //this function returns array multiplied by current number a
