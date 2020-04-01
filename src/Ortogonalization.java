@@ -80,8 +80,10 @@ public class Ortogonalization {
             x[k][0]=y[k][0];
         }
         double[] temp;
+        //here we find x(2), x(3), ... x(n)
         for(int m=1; m<rows; m++){
-            temp=sum(AFM(x,m),AFM(y,m));
+            temp=sum(AFM(x,m),AFM(y,m)); //here we get array (vector) of sum two vectors x(m) and y(m)
+                                         //x(m) as default equals to (0,0,...0)
             for(int cx=0; cx<rows; cx++){
                 x[cx][m]=temp[cx];
             }
